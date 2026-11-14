@@ -151,6 +151,7 @@ MonoBehaviour:
   rodaTraseiraDireitaVisual: {fileID: 1999103041}
   forcaDoMotor: 700
   forcaDoFreio: 300
+  forcaFreioDeMao: 10000
   resistenciaDeRolagem: 1000
   anguloMaximoDirecao: 40
   acaoMover:
@@ -219,6 +220,16 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Acao Frear
       m_Flags: 0
+    m_Flags: 0
+    m_Priority: 0
+  acaoFreioMao:
+    m_Name: Acao Freio Mao
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: cc7cd0fd-5328-4906-8827-0c61abc30781
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
     m_Flags: 0
     m_Priority: 0
 --- !u!54 &86243080
@@ -427,7 +438,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 638271747}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06622171, y: -0.0113602765, z: 0.000754001, w: 0.99774}
+  m_LocalRotation: {x: 0.066221476, y: -0.011653603, z: 0.00077346945, w: 0.99773663}
   m_LocalPosition: {x: -0.04, y: 2.76, z: 4.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1195,7 +1206,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2077433319}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06622171, y: -0.011360277, z: 0.000754001, w: 0.99774}
+  m_LocalRotation: {x: 0.06622146, y: -0.0116536, z: 0.00077346904, w: 0.99773663}
   m_LocalPosition: {x: -0.04, y: 2.76, z: 4.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
