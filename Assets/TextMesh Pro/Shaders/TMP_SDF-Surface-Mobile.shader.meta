@@ -1,9 +1,7 @@
 fileFormatVersion: 2
 guid: 85187c2149c549c5b33f0cdb02836b17
 ShaderImporter:
-  externalObjects: {}
   defaultTextures: []
-  nonModifiableTextures: []
   userData: 
   assetBundleName: 
   assetBundleVariant: 
@@ -11,6 +9,6 @@ AssetOrigin:
   serializedVersion: 1
   productId: 145489
   packageName: Arcade Car Controller (Lite version)
-  packageVersion: 
+  packageVersion: 1.5.02
   assetPath: Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader
-  uploadId: 0
+  uploadId: 466643

@@ -16,16 +16,20 @@ public class ControladorCarro : MonoBehaviour
     [SerializeField] private Transform rodaTraseiraDireitaVisual;
 
     [Header("Configurações do Veículo (Drift)")]
-    [SerializeField] private float forcaDoMotor = 500f; // Reduzido para maior controle
-    [SerializeField] private float forcaDoFreio = 3000f; // Freio normal (todas as rodas)
-    [SerializeField] private float forcaFreioDeMao = 10000f; // Força massiva para travar apenas a traseira
+    [SerializeField] private float forcaDoMotor = 500f;
+    [SerializeField] private float forcaDoFreio = 3000f;
+    [SerializeField] private float forcaFreioDeMao = 10000f;
     [SerializeField] private float resistenciaDeRolagem = 1000f;
-    [SerializeField] private float anguloMaximoDirecao = 45f; // Aumentado para 45º para permitir contratesterço
+    [SerializeField] private float anguloMaximoDirecao = 45f;
+
+    [Header("Ajustes de Aderência (Drift)")]
+    [SerializeField] private float aderenciaNormal = 1.0f; // Pneu grudado no chão
+    [SerializeField] private float aderenciaDrift = 0.4f;  // Pneu escorregando de lado
 
     [Header("Controles")]
     [SerializeField] private InputAction acaoMover;
-    [SerializeField] private InputAction acaoFrear; // Freio normal
-    [SerializeField] private InputAction acaoFreioMao; // Nova ação para iniciar o Drift
+    [SerializeField] private InputAction acaoFrear;
+    [SerializeField] private InputAction acaoFreioMao;
 
     private float entradaVertical;
     private float entradaHorizontal;
@@ -36,7 +40,7 @@ public class ControladorCarro : MonoBehaviour
     {
         acaoMover.Enable();
         acaoFrear.Enable();
-        acaoFreioMao.Enable(); // Habilitando a nova ação
+        acaoFreioMao.Enable();
     }
 
     void FixedUpdate()
@@ -57,7 +61,7 @@ public class ControladorCarro : MonoBehaviour
         entradaVertical = mover.y;
 
         estaFreando = acaoFrear.IsPressed();
-        estaFazendoDrift = acaoFreioMao.IsPressed(); // Lê se o freio de mão está pressionado
+        estaFazendoDrift = acaoFreioMao.IsPressed();
     }
 
     private void ControlarMotorEFreio()
@@ -73,27 +77,34 @@ public class ControladorCarro : MonoBehaviour
         // 2. Lógica de Frenagem e Drift
         if (estaFazendoDrift)
         {
-            // Freio de Mão: Trava apenas as rodas traseiras com força máxima para derrapar
-            freioTraseira = forcaFreioDeMao;
+            // Não trava a roda com o freio! Deixa ela girar livre e dá mais força pro motor
+            freioTraseira = 0f;
             freioFrente = 0f;
+
+            rodaTraseiraDireitaCollider.motorTorque = forcaAtualDoMotor * 2.5f;
+            rodaTraseiraEsquerdaCollider.motorTorque = forcaAtualDoMotor * 2.5f;
+
+            AjustarAtritoTraseiro(aderenciaDrift); // Solta a traseira para escorregar
         }
-        else if (estaFreando)
+        else
         {
-            // Freio Normal: Aplica força em todas as rodas
-            freioFrente = forcaDoFreio;
-            freioTraseira = forcaDoFreio;
-        }
-        else if (Mathf.Abs(entradaVertical) < 0.1f)
-        {
-            // Desaceleração natural ao soltar o acelerador
-            freioFrente = resistenciaDeRolagem;
-            freioTraseira = resistenciaDeRolagem;
-        }
-        else if (entradaVertical * rodaTraseiraEsquerdaCollider.rpm < 0f)
-        {
-            // Resistência ao tentar dar ré enquanto o carro ainda vai pra frente
-            freioFrente = resistenciaDeRolagem;
-            freioTraseira = resistenciaDeRolagem;
+            AjustarAtritoTraseiro(aderenciaNormal); // Recupera a aderência normal
+
+            if (estaFreando)
+            {
+                freioFrente = forcaDoFreio;
+                freioTraseira = forcaDoFreio;
+            }
+            else if (Mathf.Abs(entradaVertical) < 0.1f)
+            {
+                freioFrente = resistenciaDeRolagem;
+                freioTraseira = resistenciaDeRolagem;
+            }
+            else if (entradaVertical * rodaTraseiraEsquerdaCollider.rpm < 0f)
+            {
+                freioFrente = resistenciaDeRolagem;
+                freioTraseira = resistenciaDeRolagem;
+            }
         }
 
         // 3. Aplica o torque de frenagem de forma independente
@@ -101,6 +112,17 @@ public class ControladorCarro : MonoBehaviour
         rodaFrenteEsquerdaCollider.brakeTorque = freioFrente;
         rodaTraseiraDireitaCollider.brakeTorque = freioTraseira;
         rodaTraseiraEsquerdaCollider.brakeTorque = freioTraseira;
+    }
+
+    private void AjustarAtritoTraseiro(float novaAderencia)
+    {
+        WheelFrictionCurve atritoEsquerda = rodaTraseiraEsquerdaCollider.sidewaysFriction;
+        atritoEsquerda.stiffness = novaAderencia;
+        rodaTraseiraEsquerdaCollider.sidewaysFriction = atritoEsquerda;
+
+        WheelFrictionCurve atritoDireita = rodaTraseiraDireitaCollider.sidewaysFriction;
+        atritoDireita.stiffness = novaAderencia;
+        rodaTraseiraDireitaCollider.sidewaysFriction = atritoDireita;
     }
 
     private void ControlarDirecao()

@@ -1,9 +1,9 @@
 fileFormatVersion: 2
 guid: bc1ede39bf3643ee8e493720e4259791
+timeCreated: 1463704911
+licenseType: Store
 ShaderImporter:
-  externalObjects: {}
   defaultTextures: []
-  nonModifiableTextures: []
   userData: 
   assetBundleName: 
   assetBundleVariant: 
@@ -11,6 +11,6 @@ AssetOrigin:
   serializedVersion: 1
   productId: 145489
   packageName: Arcade Car Controller (Lite version)
-  packageVersion: 
+  packageVersion: 1.5.02
   assetPath: Assets/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader
-  uploadId: 0
+  uploadId: 466643
