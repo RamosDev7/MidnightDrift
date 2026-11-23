@@ -11,5 +11,5 @@ AssetOrigin:
   productId: 145489
   packageName: Arcade Car Controller (Lite version)
   packageVersion: 1.5.02
-  assetPath: Assets/ACC_Lite/Prefabs/Contreollers/Camera.prefab
+  assetPath: Assets/Prefabs/Camera.prefab
   uploadId: 466643

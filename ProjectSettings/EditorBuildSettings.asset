@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
-    guid: df3b2c6e50e4be04d84818dcc91acff9
+    path: Assets/Scenes/RacePista.unity
+    guid: 9789e29865be3414080f478abfc4aa71
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}

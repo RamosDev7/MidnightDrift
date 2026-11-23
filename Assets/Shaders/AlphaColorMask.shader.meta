@@ -12,5 +12,5 @@ AssetOrigin:
   productId: 145489
   packageName: Arcade Car Controller (Lite version)
   packageVersion: 1.5.02
-  assetPath: Assets/ACC_Lite/Shaders/AlphaColorMask.shader
+  assetPath: Assets/Shaders/AlphaColorMask.shader
   uploadId: 466643
